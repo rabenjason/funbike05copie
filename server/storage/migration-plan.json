@@ -1,0 +1,17 @@
+{
+  "status": "prepared-not-imported",
+  "sourceInventoryFromPhase1": {
+    "products": 60,
+    "brands": 11,
+    "categories": 5,
+    "productTypes": 20,
+    "models": 12,
+    "dealers": 5,
+    "productImageReferences": 66,
+    "distinctProductImageUrls": 53,
+    "promotions": 0,
+    "blogArticles": 0
+  },
+  "targetFilesAreEmptyUntilPhase3": true,
+  "sourceFilesRemainUntouched": true
+}

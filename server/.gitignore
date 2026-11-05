@@ -1,0 +1,14 @@
+# Generated export snapshot and migration artifacts
+/storage/.migration-source.json
+/storage/*.json.lock
+/storage/.write-*
+/storage/image-cache/*
+!/storage/image-cache/.gitkeep
+/storage/backups/*
+!/storage/backups/.gitkeep
+/storage/migration-reports/*.json
+
+# Imported and uploaded media can be large/customer-managed; keep only directory markers
+/uploads/**
+!/uploads/**/
+!/uploads/**/.gitkeep
