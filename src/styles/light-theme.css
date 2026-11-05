@@ -1,0 +1,131 @@
+/*
+ * FunBike light theme refinement.
+ * Every rule is gated by :root:not(.dark), so the approved dark theme keeps
+ * its original values and rendering untouched.
+ */
+:root:not(.dark) {
+  color-scheme: light;
+  background: #f5f4ef;
+  scrollbar-color: #bba234 #f5f4ef;
+  --fb-card: #fffefa;
+  --fb-card-media: #f0efea;
+  --fb-card-border: rgb(35 37 33 / 0.1);
+  --fb-card-border-hover: rgb(35 37 33 / 0.24);
+  --fb-card-shadow: 0 1px 2px rgb(30 32 28 / 0.035), 0 8px 22px -11px rgb(30 32 28 / 0.16);
+  --fb-card-shadow-hover: 0 2px 5px rgb(30 32 28 / 0.055), 0 18px 36px -17px rgb(30 32 28 / 0.2);
+}
+
+:root:not(.dark) body {
+  background: #f5f4ef;
+  color: #20211e;
+}
+
+:root:not(.dark) .min-h-screen.bg-white,
+:root:not(.dark) main > div.bg-white,
+:root:not(.dark) main > div > .bg-white {
+  background-color: #f5f4ef;
+  color: #20211e;
+}
+
+/* White utility surfaces become a soft porcelain rather than raw white.
+   Product photography frames remain intentionally true white. */
+:root:not(.dark) .bg-white:not(.fb-stage-white):not(.product-media-stage) {
+  background-color: #fbfaf7;
+}
+
+:root:not(.dark) .glass-header {
+  background: rgb(250 249 245 / 0.88);
+  box-shadow: 0 1px 0 rgb(35 37 33 / 0.08), 0 8px 24px rgb(35 37 33 / 0.045);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+}
+
+:root:not(.dark) .glass-panel {
+  border-color: rgb(35 37 33 / 0.12);
+  background: rgb(255 254 250 / 0.88);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 5px 18px rgb(35 37 33 / 0.06);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  backdrop-filter: blur(16px) saturate(130%);
+}
+
+:root:not(.dark) .fb-card {
+  border-radius: 2px;
+}
+
+:root:not(.dark) .fb-card:hover {
+  transform: translateY(-2px);
+}
+
+:root:not(.dark) .fb-card-media {
+  background: #f0efea;
+}
+
+:root:not(.dark) .fb-stage-white,
+:root:not(.dark) .product-media-stage {
+  background: #fff !important;
+}
+
+/* Quiet, warm separators on light editorial sections. */
+:root:not(.dark) .border-black\/10 {
+  border-color: rgb(35 37 33 / 0.11);
+}
+
+:root:not(.dark) .border-black\/15 {
+  border-color: rgb(35 37 33 / 0.15);
+}
+
+:root:not(.dark) .dealer-city {
+  border-color: rgb(35 37 33 / 0.15);
+}
+
+:root:not(.dark) .dealer-city[aria-selected="true"] {
+  border-color: #252621;
+  background: #252621;
+  color: #fffefa;
+}
+
+:root:not(.dark) .dealer-city:focus-visible,
+:root:not(.dark) button:focus-visible,
+:root:not(.dark) a:focus-visible {
+  outline-color: #ad8e24;
+}
+
+@media (min-width: 640px) {
+  :root:not(.dark) .dealer-city:hover,
+  :root:not(.dark) .dealer-city[aria-selected="true"] {
+    background: transparent;
+    color: #20211e;
+  }
+}
+
+@media (max-width: 639px) {
+  :root:not(.dark) .glass-header {
+    background: rgb(250 249 245 / 0.94);
+  }
+}
+
+/* Small utility copy (navigation, metadata and helper labels) must remain legible. */
+:root:not(.dark) .text-black\/35 { color: rgb(32 33 30 / 0.58); }
+:root:not(.dark) .text-black\/40 { color: rgb(32 33 30 / 0.61); }
+:root:not(.dark) .text-black\/45 { color: rgb(32 33 30 / 0.64); }
+:root:not(.dark) .text-black\/50 { color: rgb(32 33 30 / 0.67); }
+:root:not(.dark) .text-black\/55 { color: rgb(32 33 30 / 0.7); }
+:root:not(.dark) [class*="text-[#98741b]"] { color: #765a0b; }
+:root:not(.dark) [class*="hover:text-[#98741b]"]:hover { color: #765a0b; }
+
+
+/* Hero secondary action: strong ink on a porcelain button over any photo area. */
+:root:not(.dark) .hero-secondary-cta {
+  border-color: rgb(255 255 255 / 0.82);
+  background: #fbfaf7;
+  color: #20211e;
+  box-shadow: 0 5px 18px rgb(0 0 0 / 0.2);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+:root:not(.dark) .hero-secondary-cta:hover {
+  border-color: #ffd100;
+  background: #ffd100;
+  color: #20211e;
+}

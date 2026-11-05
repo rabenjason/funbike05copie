@@ -1,0 +1,496 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-fb-yellow: #ffd100;
+  --color-fb-paper: #ffffff;
+  --color-fb-ink: #171816;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+  --container-site: 1280px;
+}
+
+:root {
+  color-scheme: light;
+  font-family: "DM Sans", sans-serif;
+  background: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root.dark {
+  color-scheme: dark;
+  background: #141513;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #ffd100 #ffffff;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+  background: #ffffff;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  line-height: 1.55;
+}
+
+#root {
+  overflow-x: clip;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+/* Masque les barres de défilement des rails tactiles tout en gardant le geste */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fluid typography scale: adapts smoothly to every screen width & form factor */
+.fluid-hero {
+  font-size: clamp(1.9rem, 1.25rem + 2.6vw, 3.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.fluid-h1 {
+  font-size: clamp(1.6rem, 1.2rem + 2.2vw, 3.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.fluid-h2 {
+  font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.35rem);
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+}
+
+.fluid-h3 {
+  font-size: clamp(1.08rem, 0.96rem + 0.55vw, 1.38rem);
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+}
+
+.fluid-body {
+  font-size: clamp(0.84rem, 0.79rem + 0.25vw, 1rem);
+  line-height: 1.6;
+}
+
+.fluid-eyebrow {
+  font-size: clamp(0.62rem, 0.58rem + 0.16vw, 0.74rem);
+  letter-spacing: 0.18em;
+}
+
+.fluid-btn {
+  font-size: clamp(0.66rem, 0.61rem + 0.18vw, 0.76rem);
+  letter-spacing: 0.12em;
+}
+
+.dark body {
+  background: #141513;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #ffd100;
+  outline-offset: 3px;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px transparent;
+}
+
+/* The chat composer has its own rounded focus container. The global square
+   accessibility outline would be duplicated and visually incorrect here. */
+textarea.chat-composer,
+textarea.chat-composer:focus,
+textarea.chat-composer:focus-visible {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Native contact select: keep the selected value, arrow and opened options
+   readable in both browser color schemes. */
+.contact-subject {
+  color-scheme: light;
+}
+
+.contact-subject option {
+  background: #ffffff;
+  color: #171816;
+}
+
+.dark .contact-subject {
+  color-scheme: dark;
+  background-color: #1c1d1a;
+  color: #f2f0ea;
+}
+
+.dark .contact-subject option {
+  background: #1c1d1a;
+  color: #f2f0ea;
+}
+
+.dark .contact-subject option:disabled {
+  color: rgb(242 240 234 / 0.5);
+}
+
+::selection {
+  color: #171816;
+  background: #ffd100;
+}
+
+/* Revendeurs — city selector.
+   Phones: 2×2 segmented buttons (48px touch targets, every city visible).
+   ≥640px: underlined tabs on a single row. */
+.dealer-city {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  border: 1px solid rgb(23 24 22 / 0.14);
+  background: transparent;
+  color: rgb(23 24 22 / 0.65);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.dealer-city[aria-selected="true"] {
+  border-color: #171816;
+  background: #171816;
+  color: #ffffff;
+}
+
+.dark .dealer-city {
+  border-color: rgb(255 255 255 / 0.14);
+  color: rgb(242 240 234 / 0.65);
+}
+
+.dark .dealer-city[aria-selected="true"] {
+  border-color: #ffd100;
+  background: #ffd100;
+  color: #171816;
+}
+
+@media (min-width: 640px) {
+  .dealer-city,
+  .dark .dealer-city {
+    flex: 1 1 0;
+    min-height: 4rem;
+    justify-content: flex-start;
+    padding: 0 1.25rem;
+    border: 0;
+    background: transparent;
+    font-size: 0.9375rem;
+  }
+
+  .dealer-city {
+    color: rgb(23 24 22 / 0.45);
+  }
+
+  .dealer-city:hover,
+  .dealer-city[aria-selected="true"] {
+    background: transparent;
+    color: #171816;
+  }
+
+  .dark .dealer-city {
+    color: rgb(242 240 234 / 0.45);
+  }
+
+  .dark .dealer-city:hover,
+  .dark .dealer-city[aria-selected="true"] {
+    background: transparent;
+    color: #ffffff;
+  }
+}
+
+.glass-header {
+  background: rgb(255 255 255 / 0.72);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  backdrop-filter: blur(22px) saturate(165%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.7), 0 10px 35px rgb(25 25 20 / 0.04);
+}
+
+.dark .glass-header {
+  background: rgb(20 21 19 / 0.72);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.08), 0 10px 35px rgb(0 0 0 / 0.12);
+}
+
+.glass-panel {
+  border: 1px solid rgb(255 255 255 / 0.8);
+  background: rgb(255 255 255 / 0.62);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 12px 36px rgb(31 30 22 / 0.08);
+}
+
+.dark .glass-panel {
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(35 36 32 / 0.62);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), 0 12px 36px rgb(0 0 0 / 0.2);
+}
+
+/* ---------- Card surfaces (design tokens) ----------
+   Light: white card on white page, separated by a hairline border + soft shadow,
+          media stage in a warm neutral grey for contrast.
+   Dark:  card is LIGHTER than the page (elevation rule), media stage one step lighter. */
+:root {
+  --fb-card: #ffffff;
+  --fb-card-media: #fafafa;
+  --fb-card-border: rgb(23 24 22 / 0.09);
+  --fb-card-border-hover: rgb(23 24 22 / 0.22);
+  --fb-card-shadow: 0 1px 2px rgb(23 24 22 / 0.04), 0 8px 24px -8px rgb(23 24 22 / 0.1);
+  --fb-card-shadow-hover: 0 2px 4px rgb(23 24 22 / 0.05), 0 20px 40px -12px rgb(23 24 22 / 0.18);
+}
+
+:root.dark {
+  --fb-card: #1c1d1a;
+  --fb-card-media: #252622;
+  --fb-card-border: rgb(255 255 255 / 0.07);
+  --fb-card-border-hover: rgb(255 255 255 / 0.18);
+  --fb-card-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 10px 30px -10px rgb(0 0 0 / 0.6);
+  --fb-card-shadow-hover: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 22px 44px -14px rgb(0 0 0 / 0.75);
+}
+
+.fb-card {
+  background: var(--fb-card);
+  border: 1px solid var(--fb-card-border);
+  box-shadow: var(--fb-card-shadow);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+}
+
+.fb-card:hover {
+  border-color: var(--fb-card-border-hover);
+  box-shadow: var(--fb-card-shadow-hover);
+}
+
+.fb-card-media {
+  background: var(--fb-card-media);
+}
+
+/* Product photo stage: pure white in both themes.
+   Product shots come from mixed sources (white studio JPGs and transparent
+   PNGs); a fixed white stage keeps every card visually identical. */
+.fb-stage-white {
+  background: #ffffff;
+}
+
+/* Detail-page media stage: the complete photo frame stays white in both themes. */
+.product-media-stage,
+.dark .product-media-stage {
+  background: #ffffff !important;
+}
+
+/* Brand selector logos: one fixed visual slot for every logo, whatever its
+   source aspect ratio or internal margins. */
+.brand-logo-slot {
+  display: inline-flex;
+  width: 3.25rem;
+  height: 1.75rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.brand-logo-slot img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .brand-logo-slot {
+    width: 3.5rem;
+    height: 2rem;
+  }
+}
+
+/* Partner ticker logo: fixed footprint so all logos share the same visual size. */
+.brand-logo-tile {
+  display: inline-flex;
+  width: 6rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.brand-logo-tile img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .brand-logo-tile {
+    width: 8rem;
+    height: 3rem;
+  }
+}
+
+/* For product photos shot on pure white: stays light, softened in dark mode */
+.fb-card-media-white {
+  background: #ffffff;
+}
+
+.dark .fb-card-media-white {
+  background: #ebebe7;
+}
+
+.dark .fb-card-media-white img {
+  filter: brightness(0.94);
+}
+
+/* Logos: always visible in both light & dark modes without any box */
+.logo-clean {
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.18));
+}
+
+.dark .logo-clean {
+  filter: brightness(1.12) contrast(1.05) drop-shadow(0 0 10px rgb(255 255 255 / 0.35))
+    drop-shadow(0 1px 3px rgb(0 0 0 / 0.65));
+}
+
+.partner-logo {
+  mix-blend-mode: multiply;
+}
+
+.dark .partner-logo {
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 0 8px rgb(255 255 255 / 0.45));
+}
+
+/* Skeleton placeholders */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(23 24 22 / 0.07);
+}
+
+.dark .skeleton {
+  background: rgb(255 255 255 / 0.07);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+  animation: fb-shimmer 1.25s ease-in-out infinite;
+}
+
+.dark .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.08), transparent);
+}
+
+/* Reliable partner ticker: the track contains two identical logo sets, so
+   -50% always lands on an exact loop boundary. */
+.fb-partner-track {
+  will-change: transform;
+  animation: fb-partners-left 22s linear infinite;
+}
+
+.group\/marquee:hover .fb-partner-track {
+  animation-play-state: paused;
+}
+
+@keyframes fb-partners-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes fb-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.hero-glass-sheet {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 0;
+  width: 100%;
+  border-right: 1px solid rgb(255 255 255 / 0.25);
+  background: rgb(16 17 15 / 0.15);
+  -webkit-backdrop-filter: blur(2px) saturate(125%);
+  backdrop-filter: blur(2px) saturate(125%);
+}
+
+@media (min-width: 1024px) {
+  .hero-glass-sheet {
+    width: 62%;
+    background: linear-gradient(90deg, rgb(16 17 15 / 0.30) 0%, rgb(16 17 15 / 0.24) 76%, transparent 100%);
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+    backdrop-filter: blur(10px) saturate(135%);
+  }
+}
+
+@keyframes fb-tail {
+  0%, 100% { transform: rotate(-12deg); }
+  50% { transform: rotate(22deg); }
+}
+.animate-fb-tail { animation: fb-tail 1.4s ease-in-out infinite; transform-origin: 0% 100%; }
+
+@keyframes fb-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.08); }
+}
+.animate-fb-blink { animation: fb-blink 4s ease-in-out infinite; transform-origin: center; }
+
+@keyframes fb-ear {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(5deg); }
+}
+.animate-fb-ear { animation: fb-ear 2.6s ease-in-out infinite; transform-origin: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
