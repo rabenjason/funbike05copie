@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "migration:export": "node scripts/export-static-data.mjs"
+    "api:php": "php -S 0.0.0.0:8080 -t server/public server/public/index.php",
+    "migration:export": "node scripts/export-static-data.mjs",
+    "migration:dry-run": "node scripts/run-migration.mjs --dry-run",
+    "migration:apply": "node scripts/run-migration.mjs --apply",
+    "migration:retry-images": "node scripts/run-migration.mjs --apply --retry-images"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
