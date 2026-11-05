@@ -26,21 +26,22 @@ Image uploads use `POST /api/media/{products|brands|dealers|blog|homepage}/{enti
 
 ## Migration preparation (do not run until Phase 3 is authorized)
 
-1. Generate a read-only snapshot from the TypeScript modules:
+1. On the machine with PHP installed, review a dry-run report (no records are written and no images are downloaded):
    ```sh
-   npm run migration:export
+   npm run migration:dry-run
    ```
-2. Review a dry-run report (no records are written and no images are downloaded):
+   This checks for PHP 8.1+, exports the TypeScript data to the ignored snapshot and runs the PHP dry-run.
+2. After reviewing relation and duplicate checks, apply explicitly:
    ```sh
-   php server/bin/migrate.php --dry-run
-   ```
-3. In Phase 3, after reviewing relation and duplicate checks, apply explicitly:
-   ```sh
-   php server/bin/migrate.php --apply
+   npm run migration:apply
    ```
    To retry failed image URLs for already imported records without replacing other edited fields:
    ```sh
-   php server/bin/migrate.php --apply --retry-images
+   npm run migration:retry-images
+   ```
+3. Start the PHP API locally with:
+   ```sh
+   FUNBIKE_ADMIN_TOKEN='a-long-random-secret' npm run api:php
    ```
 
 The migration runner backs up current JSON and existing uploads before an apply. It validates entity references, records duplicate IDs, inserts missing records by stable ID (or dealer key), and skips existing IDs on subsequent runs rather than duplicating or overwriting them. With `--retry-images`, it may change only image URL fields that still equal the original source URL. Each unique source URL is fetched once into a SHA-256-keyed cache; verified image bytes are copied into each entity's own directory. A failed, empty, oversized, unsupported or corrupt download leaves the original URL unchanged and is listed with entity, field, URL and reason in the report. Existing files are replaced only after a downloaded image has passed integrity checks. Images use the source MIME type for a clean extension and stable main/secondary naming.
