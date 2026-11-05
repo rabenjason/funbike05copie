@@ -37,8 +37,11 @@ final class MigrationRunner
         foreach ($source as $resource => $value) {
             $report['counts'][$resource] = is_array($value) && array_is_list($value) ? count($value) : ($value === null ? 0 : 1);
         }
-        if ($report['relations'] !== []) $report['warnings'][] = 'Relation validation found unresolved references; no data will be written until corrected.';
-        if ($report['duplicates'] !== []) $report['warnings'][] = 'Duplicate source identifiers were detected; later copies are ignored.';
+        if ($report['relations'] !== []) $report['warnings'][] = 'Relation validation found unresolved references; apply is blocked until corrected.';
+        $duplicateIdentifiers = array_filter($report['duplicates'], static fn(array $duplicate): bool => ($duplicate['type'] ?? null) === 'stored-id' || isset($duplicate['issue']));
+        $duplicateImageUrls = array_filter($report['duplicates'], static fn(array $duplicate): bool => ($duplicate['type'] ?? null) === 'image-url');
+        if ($duplicateIdentifiers !== []) $report['warnings'][] = 'Duplicate or missing entity identifiers were detected; review the duplicate details before applying.';
+        if ($duplicateImageUrls !== []) $report['warnings'][] = 'Some image URLs are reused by multiple records; each URL is downloaded once and copied into each entity folder.';
 
         $imageMigrator = new ImageMigrator($this->serverRoot . '/uploads', $this->serverRoot . '/storage/image-cache');
         if ($apply && $report['relations'] !== []) {
